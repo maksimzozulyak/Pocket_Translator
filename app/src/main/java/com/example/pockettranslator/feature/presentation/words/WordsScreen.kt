@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.pockettranslator.feature.domain.model.Word
+import com.example.pockettranslator.feature.presentation.util.Screen
 import com.example.pockettranslator.feature.presentation.words.components.WordItem
 import kotlinx.coroutines.launch
 
@@ -34,8 +35,7 @@ fun WordsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-
-
+                    navController.navigate(Screen.AddEditWordScreen.route)
                 },
             backgroundColor = MaterialTheme.colors.primary
             ) {
@@ -50,7 +50,12 @@ fun WordsScreen(
                     word = word, 
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { },
+                        .clickable {
+                            navController.navigate(
+                                Screen.AddEditWordScreen.route +
+                                        "?wordId=${word.id}"
+                            )
+                        },
                     onDeleteWord = {
                         viewModel.onEvent(WordsEvent.DeleteWord(word))
                         scope.launch { 
