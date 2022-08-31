@@ -26,8 +26,7 @@ fun WordItem(
     word: Word,
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 10.dp,
-    cutCornerSize: Dp = 30.dp,
-    onDeleteWord : () -> Unit
+    cutCornerSize: Dp = 30.dp
     ) {
     Box(
         modifier = modifier,
