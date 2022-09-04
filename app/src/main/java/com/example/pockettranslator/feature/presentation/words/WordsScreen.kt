@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -29,7 +31,7 @@ import com.example.pockettranslator.feature.presentation.util.Screen
 import com.example.pockettranslator.feature.presentation.words.components.WordItem
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun WordsScreen(
     navController: NavController,
@@ -52,7 +54,11 @@ fun WordsScreen(
         },
         scaffoldState = scaffoldState,
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxSize()
+        ) {
 
             itemsIndexed(
                 items = list,
@@ -81,6 +87,10 @@ fun WordsScreen(
                 )
 
                 SwipeToDismiss(
+                    modifier = Modifier
+                        .animateItemPlacement()
+                        .padding(horizontal = 6.dp)
+                        .clip(RoundedCornerShape(12.dp)),
                     state = dismissState,
                     background = {
                         val color by animateColorAsState(
@@ -95,10 +105,11 @@ fun WordsScreen(
                         )
                         Box(
                             Modifier
-                                .padding(10.dp)
+                                .padding(6.dp)
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(color)
                                 .fillMaxSize(),
-                            contentAlignment = Alignment.CenterStart
+                            contentAlignment = Alignment.CenterStart,
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
@@ -116,6 +127,8 @@ fun WordsScreen(
                             WordItem(
                                 word = word,
                                 modifier = Modifier
+                                    .padding()
+                                    .background(Color.White)
                                     .fillMaxWidth()
                                     .clickable {
                                         navController.navigate(
@@ -129,7 +142,7 @@ fun WordsScreen(
                     directions = setOf(DismissDirection.StartToEnd),
                     dismissThresholds = { FractionalThreshold(0.3f) }
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }

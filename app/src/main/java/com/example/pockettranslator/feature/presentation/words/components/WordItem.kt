@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
 import com.example.pockettranslator.feature.domain.model.Word
+import com.example.pockettranslator.ui.theme.Purple200
 import com.example.pockettranslator.ui.theme.Teal200
 
 
@@ -25,7 +26,7 @@ import com.example.pockettranslator.ui.theme.Teal200
 fun WordItem(
     word: Word,
     modifier: Modifier = Modifier,
-    cornerRadius: Dp = 10.dp,
+    cornerRadius: Dp = 12.dp,
     cutCornerSize: Dp = 30.dp
     ) {
     Box(
@@ -42,7 +43,7 @@ fun WordItem(
 
             clipPath(clipPath) {
                 drawRoundRect(
-                    color = Teal200,
+                    color = Purple200,
                     size = size,
                     cornerRadius = CornerRadius(cornerRadius.toPx())
                 )
