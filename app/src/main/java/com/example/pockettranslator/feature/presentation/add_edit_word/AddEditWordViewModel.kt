@@ -1,12 +1,15 @@
 package com.example.pockettranslator.feature.presentation.add_edit_word
 
+import android.graphics.Color
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pockettranslator.feature.domain.model.Word
 import com.example.pockettranslator.feature.domain.use_case.UseCases
+import com.example.pockettranslator.ui.theme.colorsList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -29,6 +32,8 @@ class AddEditWordViewModel @Inject constructor(
     ))
     val wordTranslation: State<WordTextFieldState> = _wordTranslation
 
+    var color: Int = colorsList.random().toArgb()
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -39,6 +44,7 @@ class AddEditWordViewModel @Inject constructor(
             if(wordId != -1) {
                 viewModelScope.launch {
                     useCases.getWord(wordId)?.also { word ->
+                        color = word.color
                         currentWordId = word.id
                         _wordOrigin.value = wordOrigin.value.copy(
                             text = word.origin,
@@ -84,6 +90,7 @@ class AddEditWordViewModel @Inject constructor(
                         Word(
                             origin = wordOrigin.value.text,
                             translation = wordTranslation.value.text,
+                            color = color,
                             id = currentWordId
                         )
                     )

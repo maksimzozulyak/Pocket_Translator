@@ -1,5 +1,6 @@
 package com.example.pockettranslator.feature.presentation.add_edit_word
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,10 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.pockettranslator.feature.presentation.add_edit_word.components.TransparentHintTextField
+import com.example.pockettranslator.ui.theme.colorsList
+import com.example.pockettranslator.ui.theme.darkGreen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -23,10 +30,9 @@ fun AddEditWordScreen(
 ) {
     val originState = viewModel.wordOrigin.value
     val translationState = viewModel.wordTranslation.value
+    val color = viewModel.color
 
     val scaffoldState = rememberScaffoldState()
-
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -49,15 +55,20 @@ fun AddEditWordScreen(
                 onClick = {
                     viewModel.onEvent(AddEditWordEvent.SaveWord)
                 },
-                backgroundColor = MaterialTheme.colors.primary
+                backgroundColor = darkGreen
             )  {
-                Icon(imageVector = Icons.Default.Save, contentDescription = "Save word")
+                Icon(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = "Save word",
+                    tint = Color.White
+                )
             }
         },
         scaffoldState = scaffoldState
     ) {
         Column(
             modifier = Modifier
+                .background(Color(color))
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
@@ -71,7 +82,10 @@ fun AddEditWordScreen(
                     viewModel.onEvent(AddEditWordEvent.ChangeOriginFocus(it))
                 },
                 isHintVisible = originState.isHintVisible,
-                textStyle = MaterialTheme.typography.h5
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 36.sp
+                )
             )
             TransparentHintTextField(
                 text = translationState.text,
@@ -83,7 +97,10 @@ fun AddEditWordScreen(
                     viewModel.onEvent(AddEditWordEvent.ChangeTranslationFocus(it))
                 },
                 isHintVisible = translationState.isHintVisible,
-                textStyle = MaterialTheme.typography.h5,
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 36.sp
+                ),
                 modifier = Modifier.fillMaxSize()
             )
         }

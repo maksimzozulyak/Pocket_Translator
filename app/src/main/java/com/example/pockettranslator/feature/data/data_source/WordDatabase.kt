@@ -1,5 +1,7 @@
 package com.example.pockettranslator.feature.data.data_source
 
+import android.annotation.SuppressLint
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.pockettranslator.feature.domain.model.Word

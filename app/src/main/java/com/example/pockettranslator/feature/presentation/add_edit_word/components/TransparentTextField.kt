@@ -41,7 +41,7 @@ fun TransparentHintTextField(
             Text(
                 text = hint,
                 style = textStyle,
-                color = Color.DarkGray
+                color = Color.White
             )
         }
     }

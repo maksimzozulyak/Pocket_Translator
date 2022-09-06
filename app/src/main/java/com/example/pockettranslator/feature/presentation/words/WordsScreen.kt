@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import com.example.pockettranslator.feature.domain.model.Word
 import com.example.pockettranslator.feature.presentation.util.Screen
 import com.example.pockettranslator.feature.presentation.words.components.WordItem
+import com.example.pockettranslator.ui.theme.darkGreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
@@ -47,9 +48,13 @@ fun WordsScreen(
                 onClick = {
                     navController.navigate(Screen.AddEditWordScreen.route)
                 },
-            backgroundColor = MaterialTheme.colors.primary
+            backgroundColor = darkGreen
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add word")
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add word",
+                    tint = Color.White
+                )
             }
         },
         scaffoldState = scaffoldState,

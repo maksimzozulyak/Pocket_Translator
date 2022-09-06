@@ -43,13 +43,13 @@ fun WordItem(
 
             clipPath(clipPath) {
                 drawRoundRect(
-                    color = Purple200,
+                    color = Color(word.color),
                     size = size,
                     cornerRadius = CornerRadius(cornerRadius.toPx())
                 )
                 drawRoundRect(
                     color = Color(
-                        ColorUtils.blendARGB(Teal200.toArgb(), 0x000000, 0.2f)
+                        ColorUtils.blendARGB(Color(word.color).toArgb(), 0x000000, 0.2f)
                     ),
                     topLeft = Offset(size.width - cutCornerSize.toPx(), -100f),
                     size = Size(
