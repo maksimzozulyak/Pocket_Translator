@@ -55,7 +55,8 @@ fun AddEditWordScreen(
                 onClick = {
                     viewModel.onEvent(AddEditWordEvent.SaveWord)
                 },
-                backgroundColor = darkGreen
+                backgroundColor = darkGreen,
+                modifier = Modifier.padding(bottom = 34.dp)
             )  {
                 Icon(
                     imageVector = Icons.Default.Save,
@@ -70,7 +71,7 @@ fun AddEditWordScreen(
             modifier = Modifier
                 .background(Color(color))
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(16.dp, top = 46.dp)
         ) {
             TransparentHintTextField(
                 text = originState.text,

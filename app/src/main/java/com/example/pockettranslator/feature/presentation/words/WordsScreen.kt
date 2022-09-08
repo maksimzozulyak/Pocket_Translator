@@ -48,7 +48,8 @@ fun WordsScreen(
                 onClick = {
                     navController.navigate(Screen.AddEditWordScreen.route)
                 },
-            backgroundColor = darkGreen
+            backgroundColor = darkGreen,
+            modifier = Modifier.padding(bottom = 34.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -61,7 +62,7 @@ fun WordsScreen(
     ) {
         LazyColumn(
             modifier = Modifier
-                .padding(top = 4.dp)
+                .padding(top = 36.dp)
                 .fillMaxSize()
         ) {
 
