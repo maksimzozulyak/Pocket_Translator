@@ -14,10 +14,13 @@ class AddWord (
 
         if (word.translation.isBlank()) {
 
-            GlobalScope.launch {
-                repository.insertWord(word.copy(translation = translate(word.origin)))
+            if (word.origin.isBlank()) {
+                //
+            } else {
+                GlobalScope.launch {
+                    repository.insertWord(word.copy(translation = translate(word.origin)))
+                }
             }
-
         } else {
             repository.insertWord(word)
         }
