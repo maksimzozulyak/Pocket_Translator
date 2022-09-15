@@ -83,10 +83,7 @@ fun AddEditWordScreen(
                     viewModel.onEvent(AddEditWordEvent.ChangeOriginFocus(it))
                 },
                 isHintVisible = originState.isHintVisible,
-                textStyle = TextStyle(
-                    color = Color.White,
-                    fontSize = 36.sp
-                )
+                textStyle = MaterialTheme.typography.h1
             )
             TransparentHintTextField(
                 text = translationState.text,
@@ -98,10 +95,7 @@ fun AddEditWordScreen(
                     viewModel.onEvent(AddEditWordEvent.ChangeTranslationFocus(it))
                 },
                 isHintVisible = translationState.isHintVisible,
-                textStyle = TextStyle(
-                    color = Color.White,
-                    fontSize = 36.sp
-                ),
+                textStyle = MaterialTheme.typography.h1,
                 modifier = Modifier.fillMaxSize()
             )
         }

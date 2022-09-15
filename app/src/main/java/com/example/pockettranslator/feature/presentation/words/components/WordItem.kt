@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.graphics.ColorUtils
 import com.example.pockettranslator.feature.domain.model.Word
 import com.example.pockettranslator.ui.theme.Purple200
@@ -66,14 +67,14 @@ fun WordItem(
         ) {
             Text(
                 text = word.origin,
-                style = MaterialTheme.typography.h3,
+                style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = word.translation,
-                style = MaterialTheme.typography.h3,
+                style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface,
                 overflow = TextOverflow.Ellipsis
             )

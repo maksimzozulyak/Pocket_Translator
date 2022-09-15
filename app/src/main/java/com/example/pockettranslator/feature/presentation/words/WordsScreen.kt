@@ -29,6 +29,8 @@ import androidx.navigation.NavController
 import com.example.pockettranslator.feature.domain.model.Word
 import com.example.pockettranslator.feature.presentation.util.Screen
 import com.example.pockettranslator.feature.presentation.words.components.WordItem
+import com.example.pockettranslator.ui.theme.color6
+import com.example.pockettranslator.ui.theme.color7
 import com.example.pockettranslator.ui.theme.darkGreen
 import kotlinx.coroutines.launch
 
@@ -43,6 +45,14 @@ fun WordsScreen(
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(it) { data ->
+                Snackbar(
+                    actionColor = color6,
+                    snackbarData = data
+                )
+            }
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
