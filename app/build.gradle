@@ -40,7 +40,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
     }
     packagingOptions {
         resources {
@@ -87,6 +86,9 @@ dependencies {
 
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.3.0"
+
+    //GSON
+    implementation 'com.google.code.gson:gson:2.9.1'
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.23.1"
 }
