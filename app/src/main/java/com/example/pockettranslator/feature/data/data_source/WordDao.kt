@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WordDao {
 
-    @Query("SELECT * FROM word")
-    fun getWords(): Flow<List<Word>>
+    @Query("SELECT * FROM word " +
+            "WHERE (origin like '%' || :search || '%') or (translation like '%' || :search || '%') ")
+    fun getWords(search: String = ""): Flow<List<Word>>
 
     @Query("SELECT * FROM word WHERE id = :id")
     suspend fun getWordById(id: Int): Word?

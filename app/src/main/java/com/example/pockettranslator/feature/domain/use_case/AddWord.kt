@@ -15,7 +15,9 @@ class AddWord (
         if (word.translation.isBlank()) {
 
             if (word.origin.isBlank()) {
-                //
+
+                repository.insertWord(word)
+
             } else {
                 GlobalScope.launch {
                     repository.insertWord(word.copy(translation = translate(word.origin)))

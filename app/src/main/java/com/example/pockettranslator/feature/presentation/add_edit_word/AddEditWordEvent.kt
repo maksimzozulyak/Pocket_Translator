@@ -3,9 +3,13 @@ package com.example.pockettranslator.feature.presentation.add_edit_word
 import androidx.compose.ui.focus.FocusState
 
 sealed class AddEditWordEvent {
-    data class EnteredOrigin(val value: String): AddEditWordEvent()
-    data class ChangeOriginFocus(val focus: FocusState): AddEditWordEvent()
-    data class EnteredTranslation(val value: String): AddEditWordEvent()
-    data class ChangeTranslationFocus(val focus: FocusState): AddEditWordEvent()
-    object SaveWord: AddEditWordEvent()
+    data class Entered(val wordTextField : WordTextField, val value: String): AddEditWordEvent()
+    data class ChangeFocus(val wordTextField : WordTextField, val focus: FocusState): AddEditWordEvent()
+    object AddExample: AddEditWordEvent()
+    object RemoveExample: AddEditWordEvent()
+    data class SaveWord(val goBack : Boolean): AddEditWordEvent()
+}
+
+enum class WordTextField {
+    Origin, Translation, Examples;
 }

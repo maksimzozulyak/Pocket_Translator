@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 class WordRepositoryImplementation(
     private val dao: WordDao
 ): WordRepository {
-    override fun getWords(): Flow<List<Word>> {
-        return dao.getWords()
+    override fun getWords(search: String): Flow<List<Word>> {
+        return dao.getWords(search)
     }
 
     override suspend fun getWordById(id: Int): Word? {

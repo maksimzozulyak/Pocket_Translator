@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pockettranslator.feature.domain.model.Word
 import com.example.pockettranslator.feature.domain.use_case.UseCases
+import com.example.pockettranslator.feature.presentation.util.CustomTextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -25,6 +26,13 @@ class WordsViewModel @Inject constructor(
 
     private var recentlyDeletedWord: Word? = null
 
+    private val _searchBar = mutableStateOf(
+        CustomTextFieldState(
+            hint = "Find"
+        )
+    )
+    val searchBar: State<CustomTextFieldState> = _searchBar
+
     init {
         getWords()
     }
@@ -43,12 +51,30 @@ class WordsViewModel @Inject constructor(
                     recentlyDeletedWord = null
                 }
             }
+            is WordsEvent.SearchBarEntered ->{
+                _searchBar.value = searchBar.value.copy(
+                    text = event.search
+                )
+                getWords(search = searchBar.value.text)
+            }
+            is WordsEvent.SearchBarChangeFocus ->{
+                _searchBar.value = searchBar.value.copy(
+                    isHintVisible = !event.focus.isFocused &&
+                            searchBar.value.text.isBlank()
+                )
+            }
+            is WordsEvent.SearchBarClear ->{
+                _searchBar.value = searchBar.value.copy(
+                    text = ""
+                )
+                getWords()
+            }
         }
     }
 
-    private fun getWords() {
+    private fun getWords(search: String = "") {
         getWordsJob?.cancel()
-        getWordsJob = useCases.getWords()
+        getWordsJob = useCases.getWords(search)
             .onEach { words ->
                 _list.value = words
             }

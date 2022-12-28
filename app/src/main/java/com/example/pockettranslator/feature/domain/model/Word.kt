@@ -9,5 +9,6 @@ data class Word(
     val origin: String,
     val translation: String,
     val color: Int = Color.WHITE,
+    val examples: List<String> = listOf(""),
     @PrimaryKey val id: Int? = null
 )

@@ -27,8 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.pockettranslator.feature.domain.model.Word
+import com.example.pockettranslator.feature.presentation.add_edit_word.AddEditWordEvent
+import com.example.pockettranslator.feature.presentation.add_edit_word.WordTextField
+import com.example.pockettranslator.feature.presentation.add_edit_word.components.TransparentHintTextField
 import com.example.pockettranslator.feature.presentation.util.Screen
+import com.example.pockettranslator.feature.presentation.words.components.SearchBar
 import com.example.pockettranslator.feature.presentation.words.components.WordItem
+import com.example.pockettranslator.ui.theme.color5
 import com.example.pockettranslator.ui.theme.color6
 import com.example.pockettranslator.ui.theme.color7
 import com.example.pockettranslator.ui.theme.darkGreen
@@ -40,6 +45,7 @@ fun WordsScreen(
     navController: NavController,
     viewModel: WordsViewModel = hiltViewModel()
 ) {
+    val searchBarState = viewModel.searchBar.value
     val list = viewModel.list.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -48,7 +54,7 @@ fun WordsScreen(
         snackbarHost = {
             SnackbarHost(it) { data ->
                 Snackbar(
-                    actionColor = color6,
+                    actionColor = color5,
                     snackbarData = data
                 )
             }
@@ -70,95 +76,107 @@ fun WordsScreen(
         },
         scaffoldState = scaffoldState,
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .padding(top = 36.dp)
-                .fillMaxSize()
-        ) {
+        Column {
 
-            itemsIndexed(
-                items = list,
-                key = {index, item ->
-                    item.hashCode()
-                }
-            ) { index, word ->
+            SearchBar(
+                text = searchBarState.text,
+                hint = searchBarState.hint,
+                isHintVisible = searchBarState.isHintVisible,
+                onValueChange = {viewModel.onEvent(WordsEvent.SearchBarEntered(it))},
+                onFocusChange = {viewModel.onEvent(WordsEvent.SearchBarChangeFocus(it))},
+                onClearPressed = {viewModel.onEvent(WordsEvent.SearchBarClear)}
+            )
 
-                val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it == DismissValue.DismissedToEnd){
-                            viewModel.onEvent(WordsEvent.DeleteWord(word))
-                            scope.launch {
-                                val result = scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Word deleted",
-                                    actionLabel = "Undo"
-                                )
-                                if(result == SnackbarResult.ActionPerformed) {
-                                    viewModel.onEvent(WordsEvent.RestoreWord)
-                                }
+            LazyColumn(
+                modifier = Modifier
+                    .padding(top = 36.dp)
+                    .fillMaxSize()
+            ) {
 
-                            }
-                        }
-                        true
+                itemsIndexed(
+                    items = list,
+                    key = { index, item ->
+                        item.hashCode()
                     }
-                )
+                ) { index, word ->
 
-                SwipeToDismiss(
-                    modifier = Modifier
-                        .animateItemPlacement()
-                        .padding(horizontal = 6.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    state = dismissState,
-                    background = {
-                        val color by animateColorAsState(
-                            when (dismissState.targetValue) {
-                                DismissValue.Default -> Color.White
-                                else -> Color.Red
-                            }
-                        )
-
-                        val scale by animateFloatAsState(
-                            if (dismissState.targetValue == DismissValue.Default) 0.5f else 1f
-                        )
-                        Box(
-                            Modifier
-                                .padding(6.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(color)
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.CenterStart,
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete Icon",
-                                modifier = Modifier.scale(scale)
-                            )
-                        }
-                    },
-                    dismissContent = {
-                        Card(
-                            elevation = animateDpAsState(
-                                if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                            ).value
-                        ) {
-                            WordItem(
-                                word = word,
-                                modifier = Modifier
-                                    .padding()
-                                    .background(Color.White)
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        navController.navigate(
-                                            Screen.AddEditWordScreen.route +
-                                                    "?wordId=${word.id}"
-                                        )
+                    val dismissState = rememberDismissState(
+                        confirmStateChange = {
+                            if (it == DismissValue.DismissedToEnd) {
+                                viewModel.onEvent(WordsEvent.DeleteWord(word))
+                                scope.launch {
+                                    val result = scaffoldState.snackbarHostState.showSnackbar(
+                                        message = "Word deleted",
+                                        actionLabel = "Undo"
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.onEvent(WordsEvent.RestoreWord)
                                     }
-                            )
+
+                                }
+                            }
+                            true
                         }
-                    },
-                    directions = setOf(DismissDirection.StartToEnd),
-                    dismissThresholds = { FractionalThreshold(0.3f) }
-                )
-                Spacer(modifier = Modifier.height(12.dp))
+                    )
+
+                    SwipeToDismiss(
+                        modifier = Modifier
+                            .animateItemPlacement()
+                            .padding(horizontal = 6.dp)
+                            .clip(RoundedCornerShape(12.dp)),
+                        state = dismissState,
+                        background = {
+                            val color by animateColorAsState(
+                                when (dismissState.targetValue) {
+                                    DismissValue.Default -> Color.White
+                                    else -> Color.Red
+                                }
+                            )
+
+                            val scale by animateFloatAsState(
+                                if (dismissState.targetValue == DismissValue.Default) 0.5f else 1f
+                            )
+                            Box(
+                                Modifier
+                                    .padding(6.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(color)
+                                    .fillMaxSize(),
+                                contentAlignment = Alignment.CenterStart,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Delete Icon",
+                                    modifier = Modifier.scale(scale)
+                                )
+                            }
+                        },
+                        dismissContent = {
+                            Card(
+                                elevation = animateDpAsState(
+                                    if (dismissState.dismissDirection != null) 4.dp else 0.dp
+                                ).value
+                            ) {
+                                WordItem(
+                                    word = word,
+                                    modifier = Modifier
+                                        .padding()
+                                        .background(Color.White)
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.AddEditWordScreen.route +
+                                                        "?wordId=${word.id}"
+                                            )
+                                        }
+                                )
+                            }
+                        },
+                        directions = setOf(DismissDirection.StartToEnd),
+                        dismissThresholds = { FractionalThreshold(0.3f) }
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
         }
     }

@@ -20,6 +20,7 @@ fun TransparentHintTextField(
     isHintVisible: Boolean = true,
     onValueChange: (String) -> Unit,
     textStyle: TextStyle = TextStyle(),
+    textColor: Color = Color.White,
     singleLine: Boolean = false,
     onFocusChange : (FocusState) -> Unit
 ) {
@@ -41,7 +42,7 @@ fun TransparentHintTextField(
             Text(
                 text = hint,
                 style = textStyle,
-                color = Color.White
+                color = textColor
             )
         }
     }

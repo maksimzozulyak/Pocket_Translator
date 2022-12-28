@@ -8,8 +8,8 @@ class GetWords(
     private val repository: WordRepository
 ) {
 
-    operator fun invoke(): Flow<List<Word>> {
-        return repository.getWords()
+    operator fun invoke(search: String = ""): Flow<List<Word>> {
+        return repository.getWords(search)
     }
 
 }
