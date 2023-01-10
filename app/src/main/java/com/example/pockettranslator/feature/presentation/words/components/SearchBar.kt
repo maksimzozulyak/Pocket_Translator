@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
@@ -17,6 +18,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun SearchBar(
@@ -30,19 +32,23 @@ fun SearchBar(
     onClearPressed: () -> Unit
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .background(color = Color.LightGray, shape = RoundedCornerShape(14.dp))
+            .background(color = Color.LightGray, shape = RoundedCornerShape(18.dp))
+            .wrapContentHeight(Alignment.CenterVertically),
     ) {
         Icon(
             imageVector = Icons.Default.Search,
             contentDescription = "Search",
-            tint = Color.Black
+            tint = Color.Black,
+            modifier = Modifier.fillMaxHeight()
         )
 
         Box(
             modifier = Modifier
                 .weight(1f)
+                .padding(top = 2.dp)
+                .fillMaxSize()
         ) {
             BasicTextField(
                 value = text,
@@ -67,8 +73,8 @@ fun SearchBar(
                 onClick = onClearPressed,
                 shape = CircleShape,
                 modifier = Modifier
-                    .size(30.dp)
-                    .padding(6.dp),
+                    .size(35.dp)
+                    .padding(7.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray),
                 contentPadding = PaddingValues(2.dp)
             ) {

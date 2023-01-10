@@ -15,13 +15,16 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
     body2 = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 42.sp,
         letterSpacing = 0.sp
     ),
     h1 = TextStyle(
-        color = Color.White,
-        fontSize = 36.sp
+        fontSize = 30.sp
+    ),
+    h2 = TextStyle(
+        fontSize = 42.sp,
+        color = Color.White
     ),
     button = TextStyle(
         fontWeight = FontWeight.Medium,

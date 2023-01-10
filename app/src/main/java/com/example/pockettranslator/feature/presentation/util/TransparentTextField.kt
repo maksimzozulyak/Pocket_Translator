@@ -22,7 +22,8 @@ fun TransparentHintTextField(
     textStyle: TextStyle = TextStyle(),
     textColor: Color = Color.White,
     singleLine: Boolean = false,
-    onFocusChange : (FocusState) -> Unit
+    onFocusChange : (FocusState) -> Unit,
+    readOnly: Boolean = false
 ) {
     Box(
         modifier = modifier
@@ -36,7 +37,8 @@ fun TransparentHintTextField(
                 .fillMaxWidth()
                 .onFocusChanged {
                     onFocusChange(it)
-                }
+                },
+            readOnly = readOnly
         )
         if(isHintVisible) {
             Text(

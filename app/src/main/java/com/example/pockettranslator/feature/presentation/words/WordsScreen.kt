@@ -9,11 +9,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.QuestionAnswer
+import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -22,8 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.pockettranslator.feature.domain.model.Word
@@ -35,7 +40,6 @@ import com.example.pockettranslator.feature.presentation.words.components.Search
 import com.example.pockettranslator.feature.presentation.words.components.WordItem
 import com.example.pockettranslator.ui.theme.color5
 import com.example.pockettranslator.ui.theme.color6
-import com.example.pockettranslator.ui.theme.color7
 import com.example.pockettranslator.ui.theme.darkGreen
 import kotlinx.coroutines.launch
 
@@ -64,7 +68,7 @@ fun WordsScreen(
                 onClick = {
                     navController.navigate(Screen.AddEditWordScreen.route)
                 },
-            backgroundColor = darkGreen,
+            backgroundColor = MaterialTheme.colors.primary,
             modifier = Modifier.padding(bottom = 34.dp)
             ) {
                 Icon(
@@ -77,19 +81,51 @@ fun WordsScreen(
         scaffoldState = scaffoldState,
     ) {
         Column {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 24.dp)
+            ) {
 
-            SearchBar(
-                text = searchBarState.text,
-                hint = searchBarState.hint,
-                isHintVisible = searchBarState.isHintVisible,
-                onValueChange = {viewModel.onEvent(WordsEvent.SearchBarEntered(it))},
-                onFocusChange = {viewModel.onEvent(WordsEvent.SearchBarChangeFocus(it))},
-                onClearPressed = {viewModel.onEvent(WordsEvent.SearchBarClear)}
-            )
+                SearchBar(
+                    text = searchBarState.text,
+                    hint = searchBarState.hint,
+                    isHintVisible = searchBarState.isHintVisible,
+                    onValueChange = { viewModel.onEvent(WordsEvent.SearchBarEntered(it)) },
+                    onFocusChange = { viewModel.onEvent(WordsEvent.SearchBarChangeFocus(it)) },
+                    onClearPressed = { viewModel.onEvent(WordsEvent.SearchBarClear) },
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .weight(1f)
+                        .height(40.dp),
+                    textStyle = TextStyle(fontSize = 24.sp)
+
+                )
+
+                Button(
+                    onClick = {
+                        if (list.isNotEmpty()) {
+                            navController.navigate(
+                                Screen.QuizScreen.route
+                            )
+                        }
+                    },
+                    modifier = Modifier
+                        .padding(end = 10.dp, top = 10.dp, bottom = 10.dp)
+                        .size(40.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    contentPadding = PaddingValues(0.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Quiz,
+                        contentDescription = "Quiz",
+                        tint = Color.White
+                    )
+                }
+            }
 
             LazyColumn(
                 modifier = Modifier
-                    .padding(top = 36.dp)
+                    .padding(top = 8.dp)
                     .fillMaxSize()
             ) {
 

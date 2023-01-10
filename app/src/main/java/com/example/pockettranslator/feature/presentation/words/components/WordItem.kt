@@ -19,8 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.ColorUtils
 import com.example.pockettranslator.feature.domain.model.Word
-import com.example.pockettranslator.ui.theme.Purple200
-import com.example.pockettranslator.ui.theme.Teal200
 
 
 @Composable

@@ -1,5 +1,6 @@
 package com.example.pockettranslator.feature.presentation.add_edit_word.components
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
@@ -19,7 +20,8 @@ fun AddRemoveExampleButton(
         onClick = onClick,
         shape = CircleShape,
         modifier = Modifier
-            .size(50.dp)
+            .size(50.dp),
+        contentPadding = PaddingValues(0.dp)
     )  {
         Icon(
             imageVector = icon,

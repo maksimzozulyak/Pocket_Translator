@@ -1,5 +1,6 @@
 package com.example.pockettranslator.feature.presentation.add_edit_word
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -53,6 +54,8 @@ class AddEditWordViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private var isRemembered = mutableStateOf(false)
+
     private var currentWordId: Int? = null
 
     init {
@@ -72,6 +75,7 @@ class AddEditWordViewModel @Inject constructor(
                         )
                         _wordExamples.clear()
                         _wordExamples.addAll(word.examples)
+                        isRemembered.value = true
                     }
                 }
             }
@@ -137,7 +141,8 @@ class AddEditWordViewModel @Inject constructor(
                             translation = wordTranslation.value.text,
                             color = color,
                             id = currentWordId,
-                            examples = wordExample
+                            examples = wordExample,
+                            isRemembered = isRemembered.value
                         )
                     )
                     if (event.goBack) {

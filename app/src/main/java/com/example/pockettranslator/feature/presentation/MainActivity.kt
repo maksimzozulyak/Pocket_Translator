@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.pockettranslator.feature.presentation.add_edit_word.AddEditWordScreen
+import com.example.pockettranslator.feature.presentation.quiz.QuizScreen
 import com.example.pockettranslator.feature.presentation.util.Screen
 import com.example.pockettranslator.feature.presentation.words.WordsScreen
 import com.example.pockettranslator.ui.theme.PocketTranslatorTheme
@@ -74,6 +75,13 @@ class MainActivity : ComponentActivity() {
                         ) {
 
                             AddEditWordScreen(
+                                navController = navController
+                            )
+                        }
+                        composable(
+                            route = Screen.QuizScreen.route,
+                        ) {
+                            QuizScreen(
                                 navController = navController
                             )
                         }

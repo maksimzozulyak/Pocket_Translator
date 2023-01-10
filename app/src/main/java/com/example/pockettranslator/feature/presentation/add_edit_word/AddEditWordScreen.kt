@@ -85,7 +85,7 @@ fun AddEditWordScreen(
                     viewModel.onEvent(AddEditWordEvent.ChangeFocus(WordTextField.Origin,it))
                 },
                 isHintVisible = originState.isHintVisible,
-                textStyle = MaterialTheme.typography.h1
+                textStyle = MaterialTheme.typography.h2
             )
             TransparentHintTextField(
                 text = translationState.text,
@@ -97,16 +97,16 @@ fun AddEditWordScreen(
                     viewModel.onEvent(AddEditWordEvent.ChangeFocus(WordTextField.Translation,it))
                 },
                 isHintVisible = translationState.isHintVisible,
-                textStyle = MaterialTheme.typography.h1
+                textStyle = MaterialTheme.typography.h2
             )
             Divider(
                 color = MaterialTheme.colors.primary,
                 thickness = 3.dp,
-                modifier = Modifier.padding(horizontal = 64.dp)
+                modifier = Modifier.padding(horizontal = 68.dp, vertical = 6.dp)
             )
             Box(modifier = Modifier
                 .padding(
-                    top = 20.dp,
+                    top = 12.dp,
                     start = 12.dp,
                     end = 12.dp,
                     bottom = 6.dp
@@ -133,6 +133,7 @@ fun AddEditWordScreen(
                         },
                         isHintVisible = examplesTextFieldState.isHintVisible,
                         textStyle = MaterialTheme.typography.h1,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                     )
 
                     if (!exampleList.isEmpty()) {
@@ -153,7 +154,8 @@ fun AddEditWordScreen(
                             ) { index, example ->
 
                                 Text(
-                                    text = example
+                                    text = example,
+                                    modifier = Modifier.padding(start = 10.dp)
                                 )
 
                                 if (index != exampleList.size - 1) {
