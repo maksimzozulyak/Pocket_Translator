@@ -111,7 +111,7 @@ class QuizViewModel @Inject constructor(
                         if (!it.isRemembered) {
                             it
                         } else {
-                            if (Random.nextInt(0, 6) == 5 || index == Random.nextInt(0, words.size)) {
+                            if (Random.nextInt(0, 4) == 2 || index == Random.nextInt(0, words.size)) {
                                 it
                             } else {
                                 null
